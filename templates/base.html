@@ -1,30 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}My Portfolio{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('projects') }}">Projects</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-        </ul>
-    </nav>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The title will be set by the page that extends this template -->
+    <title>{% block title %}Rounak Saha - Portfolio{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            /* NEW Animated Gradient Background */
+            background: linear-gradient(-45deg, #ef4268, #f3ac95, #4f470c, #3c510f);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
 
-    <!-- Main Content -->
-    <main>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #fde047, #f59e0b); /* Yellow to Amber Gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .navbar-glass {
+            background-color: rgba(15, 23, 42, 0.7); /* Darker glass effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="w-full overflow-x-hidden">
+
+    <!-- Header & Navbar -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar-glass">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="{{ url_for('home') }}" class="text-2xl font-bold text-white">Rounak Saha</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="{{ url_for('about') }}" class="text-slate-300 hover:text-amber-400 transition-colors">About</a>
+                <a href="{{ url_for('projects') }}" class="text-slate-300 hover:text-amber-400 transition-colors">Projects</a>
+                <a href="{{ url_for('contact') }}" class="text-slate-300 hover:text-amber-400 transition-colors">Contact</a>
+            </div>
+            <a href="{{ url_for('contact') }}" class="hidden md:block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">
+                Hire Me
+            </a>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" type="button" class="md:hidden text-white text-2xl" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900">
+            <a href="{{ url_for('about') }}" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">About</a>
+            <a href="{{ url_for('projects') }}" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Projects</a>
+            <a href="{{ url_for('contact') }}" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Contact</a>
+        </div>
+    </header>
+
+    <!-- This is where the content from other pages will be injected -->
+    <main class="container mx-auto px-6 pt-24">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Your Name. All rights reserved.</p>
+    <footer class="bg-slate-900/50 py-6 mt-20">
+        <div class="container mx-auto px-6 text-center text-slate-400">
+            <p>&copy; 2024 Rounak Saha. All Rights Reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // --- Mobile Menu ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Scroll Animations ---
+        // This will animate the section on the current page when it becomes visible
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Optional: stop observing after animation
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Navbar transparency on scroll ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,20 +1,74 @@
 {% extends "base.html" %}
 
-{% block title %}Home - My Portfolio{% endblock %}
+{% block title %}Home - Rounak Saha{% endblock %}
 
 {% block content %}
-<section>
-    <h1>Hi, I'm [Your Name]</h1>
-    <p>I'm a computer science student passionate about building software and solving real-world problems with code.</p>
-    <p>Welcome to my portfolio — here you'll find my projects, background, and how to get in touch.</p>
+<!-- Hero Section -->
+<section id="hero" class="min-h-[80vh] flex flex-col-reverse md:flex-row items-center justify-center text-center md:text-left section">
+    <div class="md:w-1/2">
+        <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+            Hi, I'm <span class="gradient-text">ROUNAK SAHA</span>
+        </h1>
+        <h2 class="text-2xl md:text-4xl font-semibold text-slate-200 mt-4">
+            I'm a <span id="typing-effect"></span>
+        </h2>
+        <p class="mt-6 text-blue-650 max-w-lg mx-auto md:mx-0">
+            A Computer Science undergraduate specializing in Transformer model optimization for low-resource environments. I build, train, and deploy predictive models using Python, TensorFlow, and PyTorch.
+        </p>
+        <div class="mt-8 flex justify-center md:justify-start space-x-4">
+            <a href="{{ url_for('projects') }}" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                View My Work
+            </a>
+            <a href="/static/Rounak_Resume_N4.pdf" download class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                Download CV
+            </a>
+        </div>
+    </div>
+    <div class="md:w-1/2 mb-10 md:mb-0 flex justify-center">
+        <div class="w-64 h-64 md:w-80 md:h-80 bg-slate-800 rounded-full overflow-hidden border-4 border-sky-500/50">
+            <img src="/static/myphoto.jpg" alt="Rounak Saha" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1e293b/e2e8f0?text=Rounak\nSaha';">
+        </div>
+    </div>
 </section>
 
-<section>
-    <h2>Quick Highlights</h2>
-    <ul>
-        <li>💻 Proficient in Python, C++, and JavaScript</li>
-        <li>🌐 Experience building web apps with Flask and React</li>
-        <li>🏆 Hackathon finalist at XYZ Tech Fest</li>
-    </ul>
-</section>
+<!-- We need the typing effect script here, as it's specific to this page -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const typingEffect = document.getElementById('typing-effect');
+        if (typingEffect) {
+            const roles = ["ML Engineer", "Full-Stack Developer", "Python Enthusiast", "Problem Solver"];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentRole = roles[roleIndex];
+                let text = '';
+                if (isDeleting) {
+                    text = currentRole.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    text = currentRole.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                // Ensure typingEffect is not null before setting textContent
+                if (typingEffect) {
+                    typingEffect.textContent = text;
+                }
+
+                if (!isDeleting && charIndex === currentRole.length) {
+                    setTimeout(() => isDeleting = true, 2000);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                }
+
+                const typingSpeed = isDeleting ? 100 : 200;
+                setTimeout(type, typingSpeed);
+            }
+            type();
+        }
+    });
+</script>
 {% endblock %}

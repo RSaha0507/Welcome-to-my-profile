@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Contact - My Portfolio{% endblock %}
+{% block title %}Contact Me - Your Name{% endblock %}
 
 {% block content %}
-<h1>Contact Me</h1>
-<p>If you'd like to get in touch, feel free to reach out via any of the platforms below:</p>
-
-<ul>
-    <li>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></li>
-    <li>LinkedIn: <a href="https://www.linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></li>
-    <li>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></li>
-</ul>
-
-<p>Or simply drop a message through your preferred platform!</p>
+<!-- Contact Section -->
+<section id="contact" class="py-20 section">
+    <h2 class="text-4xl font-bold text-center mb-4">Get In <span class="gradient-text">Touch</span></h2>
+    <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto">
+        I'm currently looking for new opportunities. Whether you have a question or just want to say hi, my inbox is always open.
+    </p>
+    <div class="text-center">
+        <a href="mailto:rs574.cs008@gmail.com" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-8 rounded-lg transition-colors text-lg">
+            Say Hello
+        </a>
+    </div>
+</section>
 {% endblock %}

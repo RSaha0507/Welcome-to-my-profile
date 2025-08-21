@@ -15,33 +15,36 @@ def about():
 # Projects page route
 @app.route("/projects")
 def projects():
+    # This list is now based on your resume
     project_list = [
         {
-            "title": "AI Chatbot",
-            "description": "A chatbot that responds to user queries using NLP.",
-            "tech": "Python, Flask, OpenAI API",
-            "github": "https://github.com/yourusername/ai-chatbot"
+            "title": "Nirmaya Health Services",
+            "description": "A full-stack, single-page web app to modernize the patient experience and streamline hospital administration.",
+            "tech": ["React.js", "Tailwind CSS", "Gemini API", "Firebase"],
+            "github": "https://github.com/RSaha0507/Nirmaya-Health-Services", # Assumed link, please update
+            "live_link": "https://nirmayahealthservices.netlify.app" # Add your live project link here
         },
         {
-            "title": "Web Scraper",
-            "description": "Scraped news headlines and stored them in a CSV.",
-            "tech": "Python, BeautifulSoup",
-            "github": "https://github.com/yourusername/web-scraper"
+            "title": "Cyber Threat Intelligence System",
+            "description": "A Python-based threat analysis platform integrating real-time APIs from AlienVault OTX and AbuseIPDB.",
+            "tech": ["Python", "MongoDB", "Streamlit", "REST APIs"],
+            "github": "https://github.com/RSaha0507/Cyber-Threat-System", # Assumed link, please update
         },
         {
-            "title": "Portfolio Website",
-            "description": "This personal portfolio site built with Flask.",
-            "tech": "Python, Flask, HTML/CSS",
-            "github": "https://github.com/yourusername/portfolio-site"
+            "title": "Lightweight Transformer Model",
+            "description": "(Ongoing) Developing a lightweight transformer model for deployment on resource-constrained devices.",
+            "tech": ["Python", "PyTorch", "Pruning", "Quantization"],
+            "github": "https://github.com/RSaha0507/Lightweight-Transformer", # Assumed link, please update
         }
     ]
+    # We pass the list of projects to the projects template
     return render_template("projects.html", projects=project_list)
 
-
-# Contact page route (optional)
+# Contact page route
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
